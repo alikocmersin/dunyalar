@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Terra Origin : Masterpiece</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="scanlines"></div>
+  <canvas id="starfield"></canvas>
+
+  <div id="auth-modal" class="modal-overlay">
+    <div class="auth-card glow-panel">
+      <div class="hologram-effect"></div>
+      <div class="logo pulse-glow glitch" data-text="TERRA : ORIGIN">TERRA : ORIGIN</div>
+      <p class="subtitle">V6 Echelon Command Interface</p>
+      <div class="input-group">
+        <input type="text" id="auth-username" placeholder="Komutan ID" autocomplete="off">
+        <input type="password" id="auth-password" placeholder="Şifre">
+      </div>
+      <div class="auth-buttons">
+        <button id="btn-login" class="btn-primary">Giriş Yap</button>
+        <button id="btn-register" class="btn-secondary">Kayıt Ol</button>
+      </div>
+      <div id="auth-error" class="error-text"></div>
+    </div>
+  </div>
+
+  <div id="admin-modal" class="modal-overlay hidden">
+    <div class="auth-card glow-panel admin-panel" style="max-width: 550px;">
+      <div class="logo glitch" data-text="SYSTEM OVERRIDE" style="color: #ff003c; text-shadow: 0 0 15px #ff003c;">SYSTEM OVERRIDE</div>
+      <p style="color:#aaa; text-align:center; font-size:0.8rem; margin-bottom: 10px;">God-Mode Control Panel</p>
+      <div class="admin-user-list" id="admin-user-list"></div>
+      <button class="btn-secondary" style="margin-top:15px; width:100%; border-color:#ff003c; color:#ff003c;" onclick="closeAdminPanel()">Terminali Kapat</button>
+    </div>
+  </div>
+
+  <div id="chat-container" class="chat-container hidden">
+    <div class="chat-header">HABERLEŞME AĞI</div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Mesaj gönder..." autocomplete="off">
+      <button id="chat-send">▶</button>
+    </div>
+  </div>
+
+  <div id="game-container" class="app-layout hidden">
+    <header class="hud-header glass-header">
+      <div class="user-badge">
+        <span class="hud-label">CMD:</span> <span id="player-name" class="name text-cyan">Komutan</span>
+        <button id="btn-admin" class="btn-admin hidden">👑 ADMIN</button>
+        <button id="btn-logout" class="btn-logout">[ÇIKIŞ]</button>
+      </div>
+      <div class="credits-badge">
+        <span id="player-credits" class="glow-text text-yellow">0</span> <span class="hud-label">CR</span>
+      </div>
+    </header>
+
+    <div class="planet-selector-bar" id="planet-list"></div>
+
+    <main class="viewport">
+      <!-- Click Mining Notification Area -->
+      <div id="floating-text-container"></div>
+      
+      <div class="planet-canvas-wrapper" id="canvas-wrapper">
+        <canvas id="planetCanvas" width="360" height="360"></canvas>
+        <div class="hab-badge glass-panel">
+          <span class="hab-title" id="stage-text">EVRE: ÇORAK</span>
+          <span id="hab-percent" class="hab-value glitch-sm" data-text="%0">%0</span>
+        </div>
+      </div>
+
+      <section class="stats-grid">
+        <div class="stat-card glass-panel">
+          <div class="stat-header"><span>TEMP</span><span id="stat-temp" class="stat-val">0°C</span></div>
+          <div class="progress-track"><div id="bar-temp" class="progress-fill fill-red"></div></div>
+          <div class="stat-target">IDEAL: 15°C</div>
+        </div>
+        <div class="stat-card glass-panel">
+          <div class="stat-header"><span>PRES</span><span id="stat-press" class="stat-val">0 atm</span></div>
+          <div class="progress-track"><div id="bar-press" class="progress-fill fill-blue"></div></div>
+          <div class="stat-target">IDEAL: 1.0 atm</div>
+        </div>
+        <div class="stat-card glass-panel">
+          <div class="stat-header"><span>OXY</span><span id="stat-oxy" class="stat-val">%0</span></div>
+          <div class="progress-track"><div id="bar-oxy" class="progress-fill fill-green"></div></div>
+          <div class="stat-target">IDEAL: %21</div>
+        </div>
+        <div class="stat-card glass-panel">
+          <div class="stat-header"><span>H2O</span><span id="stat-water" class="stat-val">%0</span></div>
+          <div class="progress-track"><div id="bar-water" class="progress-fill fill-cyan"></div></div>
+          <div class="stat-target">IDEAL: %65</div>
+        </div>
+      </section>
+    </main>
+
+    <section class="action-drawer glass-drawer">
+      <div class="drawer-header glitch-sm" data-text="YAPISAL PROTOKOLLER">YAPISAL PROTOKOLLER</div>
+      <div class="building-list" id="building-list"></div>
+    </section>
+  </div>
+  
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
